@@ -1324,6 +1324,24 @@ export function initializeObjectBrowser(context: vscode.ExtensionContext) {
       }
     }),
 
+    vscode.commands.registerCommand("code-for-ibmi.objectBrowser.runAction", async (node?: ObjectBrowserMemberItem, nodes?: ObjectBrowserMemberItem[]) => {
+      const members: ObjectBrowserMemberItem[] = [];
+      if (nodes) {
+        members.push(...nodes);
+      }
+      else if (node) {
+        members.push(node);
+      }
+      else {
+        members.push(...objectTreeViewer.selection.filter(i => i instanceof ObjectBrowserMemberItem) as ObjectBrowserMemberItem[]);
+      }
+
+      for (const member of members) {
+        let actionResult = await vscode.commands.executeCommand('code-for-ibmi.runAction', instance, undefined, undefined, member.resourceUri, node);
+        console.log(actionResult);
+      }
+    }),
+
     vscode.commands.registerCommand(`code-for-ibmi.searchObjectBrowser`, async() => {
         vscode.commands.executeCommand('objectBrowser.focus');
         vscode.commands.executeCommand('list.find');

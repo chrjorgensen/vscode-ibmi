@@ -1452,6 +1452,13 @@
 				"icon": "$(remove)"
 			},
 			{
+				"command": "code-for-ibmi.objectBrowser.runAction",
+				"enablement": "code-for-ibmi:connected",
+				"title": "Run action...",
+				"category": "IBM i",
+				"icon": "$(file-binary)"
+			},
+			{
 				"command": "code-for-ibmi.moveFilterUp",
 				"enablement": "code-for-ibmi:connected",
 				"title": "Move Up",
@@ -1669,7 +1676,14 @@
 			{
 				"command": "code-for-ibmi.runAction",
 				"key": "ctrl+e",
-				"mac": "cmd+e"
+				"mac": "cmd+e",
+				"when": "editorFocus"
+			},
+			{
+				"command": "code-for-ibmi.objectBrowser.runAction",
+				"key": "ctrl+e",
+				"mac": "cmd+e",
+				"when": "focusedView === objectBrowser"
 			},
 			{
 				"command": "code-for-ibmi.launchDeploy",
