@@ -107,7 +107,7 @@ export interface IBMiMember {
   changed?: Date
 }
 
-export interface IFSFile {
+export type IFSFile = {
   type: "directory" | "streamfile"
   name: string
   path: string
@@ -188,6 +188,7 @@ export type SearchHit = {
   lines: SearchHitLine[]
   readonly?: boolean
   label?: string
+  file?: IFSFile
 }
 
 export type SearchHitLine = {
