@@ -21,6 +21,7 @@ export namespace Search {
   export async function searchMembers(connection: IBMi, library: string, sourceFile: string, searchTerm: string, members: string | IBMiMember[], readOnly?: boolean,): Promise<SearchResults> {
     const config = connection.getConfig();
     const content = connection.getContent();
+    const infoComponent = connection.getComponent<GetMemberInfo>(GetMemberInfo.ID);
 
     if (connection && config && content) {
       let detailedMembers: IBMiMember[] | undefined;
@@ -66,13 +67,14 @@ export namespace Search {
           detailedMembers = await infoComponent?.getMultipleMemberInfo(connection, hits.map(parseHitPath));
         }
 
-        // Then fix the extensions in the hit
+        // Add extension and member info to the hit.
         for (const hit of hits) {
           const hitMember = parseHitPath(hit);
           const foundMember = detailedMembers?.find(member => member.name === hitMember.name && member.library === hitMember.library && member.file === hitMember.file);
 
           if (foundMember) {
             hit.path = connection.sysNameInLocal(`${asp ? `${asp}/` : ``}${foundMember.library}/${foundMember.file}/${foundMember.name}.${foundMember.extension}`);
+            hit.member = foundMember;
           }
         }
 

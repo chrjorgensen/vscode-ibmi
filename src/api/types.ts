@@ -94,7 +94,7 @@ export interface IBMiObject extends QsysPath {
   owner?: string
 }
 
-export interface IBMiMember {
+export type IBMiMember = {
   library: string
   file: string
   name: string
@@ -189,6 +189,7 @@ export type SearchHit = {
   readonly?: boolean
   label?: string
   file?: IFSFile
+  member?: IBMiMember
 }
 
 export type SearchHitLine = {
